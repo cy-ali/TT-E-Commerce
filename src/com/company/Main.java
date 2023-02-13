@@ -22,9 +22,13 @@ public class Main {
     public static void main(String[] args) {
 
         DataGenerator.createCustomer();
+
         DataGenerator.createCategory();
+
         DataGenerator.createProduct();
+
         DataGenerator.createBalance();
+
         DataGenerator.createDiscount();
 
         Scanner scanner = new Scanner(System.in);
