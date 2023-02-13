@@ -9,10 +9,7 @@ import com.company.order.Order;
 import com.company.order.OrderService;
 import com.company.order.OrderServiceImpl;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 import static com.company.StaticConstants.DISCOUNT_LIST;
 import static com.company.StaticConstants.ORDER_LIST;
@@ -26,7 +23,10 @@ public class Main {
         DataGenerator.createProduct();
         DataGenerator.createBalance();
         DataGenerator.createDiscount();
-
+    //to confirm address
+        printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
+        //Address{StreetNumber='7925', StreetName='Jones Branch Dr', ZipCode='22102', State='VA'}
+        //Address{StreetNumber='825', StreetName='GeorgeTown Pky', ZipCode='22036', State='VA'}
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Select Customer:");
@@ -222,11 +222,21 @@ public class Main {
     }
 
     private static void printAddressByCustomerId(Customer customer) {
+        customer.getAddress().stream()
+                .map(Objects::toString)
+                .forEach(System.out::println);
+
+
+
+
+     /*
         for (Address address : customer.getAddress()) {
             System.out.println(" Street Name: " + address.getStreetName() +
                     " Street Number: " + address.getStreetNumber() + "ZipCode:  "
                     + address.getZipCode() + " State: " + address.getState());
         }
+
+      */
     }
 
     private static boolean putItemToCartIfStockAvailable(Cart cart, Product product) {
