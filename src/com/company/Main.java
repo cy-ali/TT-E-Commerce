@@ -253,7 +253,7 @@ public class Main {
         return StaticConstants.PRODUCT_LIST.stream()
                 .filter(product -> product.getId().toString().equals(productId))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new Exception("Product not found"));
     }
 
 
