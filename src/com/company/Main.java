@@ -250,12 +250,10 @@ public class Main {
     }
 
     private static Product findProductById(String productId) throws Exception {
-        for (Product product : StaticConstants.PRODUCT_LIST) {
-            if (product.getId().toString().equals(productId)) {
-                return product;
-            }
-        }
-        throw new Exception("Product not found");
+        return StaticConstants.PRODUCT_LIST.stream()
+                .filter(product -> product.getId().toString().equals(productId))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Product not found"));
     }
 
 
