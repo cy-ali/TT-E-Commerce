@@ -77,12 +77,7 @@ public class Main {
                     }
                     break;
                 case 3://see balance
-                    CustomerBalance cBalance = findCustomerBalance(customer.getId());
-                    GiftCardBalance gBalance = findGiftCardBalance(customer.getId());
-                    double totalBalance = cBalance.getBalance() + gBalance.getBalance();
-                    System.out.println("Total Balance:" + totalBalance);
-                    System.out.println("Customer Balance:" + cBalance.getBalance());
-                    System.out.println("Gift Card Balance:" + gBalance.getBalance());
+                    seeBalance(customer);
                     break;
                 case 4://add balance
                     CustomerBalance customerBalance = findCustomerBalance(customer.getId());
@@ -297,5 +292,14 @@ public class Main {
                 "Place an order", "See Cart", "See order details", "See your address", "Close App"};
     }
 
+
+    private static void seeBalance(Customer customer){
+        CustomerBalance cBalance = findCustomerBalance(customer.getId());
+        GiftCardBalance gBalance = findGiftCardBalance(customer.getId());
+        double totalBalance = cBalance.getBalance() + gBalance.getBalance();
+        System.out.println("Total Balance:" + totalBalance);
+        System.out.println("Customer Balance:" + cBalance.getBalance());
+        System.out.println("Gift Card Balance:" + gBalance.getBalance());
+    }
 
 }
