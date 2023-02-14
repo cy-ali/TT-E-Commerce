@@ -197,12 +197,11 @@ public class Main {
     }
 
     private static Discount findDiscountById(String discountId) throws Exception {
-        for (Discount discount : DISCOUNT_LIST) {
-            if (discount.getId().toString().equals(discountId)) {
-                return discount;
-            }
-        }
-        throw new Exception("Discount couldn't applied because couldn't found");
+        return StaticConstants.DISCOUNT_LIST.stream()
+                .filter(discount -> discount.getId().toString().equals(discountId))
+                .findFirst()
+                .orElseThrow(() -> new Exception("Discount couldn't applied because couldn't found"));
+
     }
 
     private static void updateProductStock(Map<Product, Integer> map) {
