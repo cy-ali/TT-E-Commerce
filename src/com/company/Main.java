@@ -267,6 +267,7 @@ public class Main {
 
 
     private static CustomerBalance findCustomerBalance(UUID customerId) {
+
         for (Balance customerBalance : StaticConstants.CUSTOMER_BALANCE_LIST) {
             if (customerBalance.getCustomerId().toString().equals(customerId.toString())) {
                 return (CustomerBalance) customerBalance;
@@ -277,6 +278,8 @@ public class Main {
         StaticConstants.CUSTOMER_BALANCE_LIST.add(customerBalance);
 
         return customerBalance;
+
+
     }
 
     private static GiftCardBalance findGiftCardBalance(UUID customerId) {
