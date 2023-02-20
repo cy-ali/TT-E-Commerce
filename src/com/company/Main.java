@@ -24,9 +24,11 @@ public class Main {
         DataGenerator.createBalance();
         DataGenerator.createDiscount();
     //to confirm address
-        printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
+      //  printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
         //Address{StreetNumber='7925', StreetName='Jones Branch Dr', ZipCode='22102', State='VA'}
         //Address{StreetNumber='825', StreetName='GeorgeTown Pky', ZipCode='22036', State='VA'}
+    //   System.out.println( findCustomerBalance(StaticConstants.CUSTOMER_LIST.get(0).getId()));
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Select Customer:");
