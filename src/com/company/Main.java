@@ -23,7 +23,7 @@ public class Main {
         DataGenerator.createProduct();
         DataGenerator.createBalance();
         DataGenerator.createDiscount();
-    //to confirm address
+        //to confirm address
         printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
         //Address{StreetNumber='7925', StreetName='Jones Branch Dr', ZipCode='22102', State='VA'}
         //Address{StreetNumber='825', StreetName='GeorgeTown Pky', ZipCode='22036', State='VA'}
@@ -80,7 +80,7 @@ public class Main {
                     seeBalance(customer);
                     break;
                 case 4://add balance
-                addBalance(customer);
+                    addBalance(customer);
                     break;
                 case 5://place an order
                     Map<Product, Integer> map = new HashMap<>();
@@ -177,32 +177,31 @@ public class Main {
         }
 
     }
-private static void addBalance(Customer customer){
-    Scanner scanner = new Scanner(System.in);
-    CustomerBalance customerBalance = findCustomerBalance(customer.getId());
-    GiftCardBalance giftCardBalance = findGiftCardBalance(customer.getId());
-    System.out.println("Which Account would you like to add?");
-    System.out.println("Type 1 for Customer Balance:" + customerBalance.getBalance());
-    System.out.println("Type 2 for Gift Card Balance:" + giftCardBalance.getBalance());
-    int balanceAccountSelection = scanner.nextInt();
-    System.out.println("How much you would like to add?");
-    double additionalAmount = scanner.nextInt();
 
-    switch (balanceAccountSelection) {
-        case 1:
-            customerBalance.addBalance(additionalAmount);
-            System.out.println("New Customer Balance:" + customerBalance.getBalance());
-            break;
-        case 2:
-            giftCardBalance.addBalance(additionalAmount);
-            System.out.println("New Gift Card Balance:" + giftCardBalance.getBalance());
-            break;
+    private static void addBalance(Customer customer) {
+        Scanner scanner = new Scanner(System.in);
+        CustomerBalance customerBalance = findCustomerBalance(customer.getId());
+        GiftCardBalance giftCardBalance = findGiftCardBalance(customer.getId());
+        System.out.println("Which Account would you like to add?");
+        System.out.println("Type 1 for Customer Balance:" + customerBalance.getBalance());
+        System.out.println("Type 2 for Gift Card Balance:" + giftCardBalance.getBalance());
+        int balanceAccountSelection = scanner.nextInt();
+        System.out.println("How much you would like to add?");
+        double additionalAmount = scanner.nextInt();
+
+        switch (balanceAccountSelection) {
+            case 1:
+                customerBalance.addBalance(additionalAmount);
+                System.out.println("New Customer Balance:" + customerBalance.getBalance());
+                break;
+            case 2:
+                giftCardBalance.addBalance(additionalAmount);
+                System.out.println("New Gift Card Balance:" + giftCardBalance.getBalance());
+                break;
+        }
+
+
     }
-
-
-
-
-}
 
     private static Discount findDiscountById(String discountId) throws Exception {
         return StaticConstants.DISCOUNT_LIST.stream()
@@ -308,7 +307,7 @@ private static void addBalance(Customer customer){
     }
 
 
-    private static void seeBalance(Customer customer){
+    private static void seeBalance(Customer customer) {
         CustomerBalance cBalance = findCustomerBalance(customer.getId());
         GiftCardBalance gBalance = findGiftCardBalance(customer.getId());
         double totalBalance = cBalance.getBalance() + gBalance.getBalance();
