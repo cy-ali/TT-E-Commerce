@@ -267,22 +267,19 @@ public class Main {
 
 
     private static CustomerBalance findCustomerBalance(UUID customerId) {
-/*
-  return      StaticConstants.CUSTOMER_BALANCE_LIST.stream()
-                .map(Balance::getCustomerId)
-                .filter(each->each.toString().equals(customerId.toString()))
-
- */
-        for (Balance customerBalance : StaticConstants.CUSTOMER_BALANCE_LIST) {
-            if (customerBalance.getCustomerId().toString().equals(customerId.toString())) {
-                return (CustomerBalance) customerBalance;
-            }
+        if (StaticConstants.CUSTOMER_BALANCE_LIST.stream()
+                .anyMatch(balance -> balance.getCustomerId().toString().equals(customerId.toString()))) {
+            return (CustomerBalance) StaticConstants.CUSTOMER_BALANCE_LIST.stream()
+                   .filter(balance -> balance.getCustomerId().toString().equals(customerId.toString()))
+                    .findFirst()
+                    .orElseThrow();
+        } else {
+            CustomerBalance c = new CustomerBalance(customerId, 0d);
+            StaticConstants.CUSTOMER_BALANCE_LIST.add(c);
+            return c;
         }
 
-        CustomerBalance customerBalance = new CustomerBalance(customerId, 0d);
-        StaticConstants.CUSTOMER_BALANCE_LIST.add(customerBalance);
 
-        return customerBalance;
 
 
     }
