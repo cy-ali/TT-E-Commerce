@@ -230,7 +230,7 @@ private static void addBalance(Customer customer){
 
     private static void printAddressByCustomerId(Customer customer) {
         customer.getAddress().stream()
-                .map(Objects::toString)
+           //     .map(Objects::toString)
                 .forEach(System.out::println);
 
 
