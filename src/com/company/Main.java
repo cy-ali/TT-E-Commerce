@@ -24,9 +24,11 @@ public class Main {
         DataGenerator.createBalance();
         DataGenerator.createDiscount();
     //to confirm address
-        printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
+      //  printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
         //Address{StreetNumber='7925', StreetName='Jones Branch Dr', ZipCode='22102', State='VA'}
         //Address{StreetNumber='825', StreetName='GeorgeTown Pky', ZipCode='22036', State='VA'}
+    //   System.out.println( findCustomerBalance(StaticConstants.CUSTOMER_LIST.get(0).getId()));
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Select Customer:");
@@ -230,7 +232,7 @@ private static void addBalance(Customer customer){
 
     private static void printAddressByCustomerId(Customer customer) {
         customer.getAddress().stream()
-                .map(Objects::toString)
+           //     .map(Objects::toString)
                 .forEach(System.out::println);
 
 
@@ -275,16 +277,21 @@ private static void addBalance(Customer customer){
 
 
     private static CustomerBalance findCustomerBalance(UUID customerId) {
-        for (Balance customerBalance : StaticConstants.CUSTOMER_BALANCE_LIST) {
-            if (customerBalance.getCustomerId().toString().equals(customerId.toString())) {
-                return (CustomerBalance) customerBalance;
-            }
+        if (StaticConstants.CUSTOMER_BALANCE_LIST.stream()
+                .anyMatch(balance -> balance.getCustomerId().toString().equals(customerId.toString()))) {
+            return (CustomerBalance) StaticConstants.CUSTOMER_BALANCE_LIST.stream()
+                   .filter(balance -> balance.getCustomerId().toString().equals(customerId.toString()))
+                    .findFirst()
+                    .orElseThrow();
+        } else {
+            CustomerBalance c = new CustomerBalance(customerId, 0d);
+            StaticConstants.CUSTOMER_BALANCE_LIST.add(c);
+            return c;
         }
 
-        CustomerBalance customerBalance = new CustomerBalance(customerId, 0d);
-        StaticConstants.CUSTOMER_BALANCE_LIST.add(customerBalance);
 
-        return customerBalance;
+
+
     }
 
     private static GiftCardBalance findGiftCardBalance(UUID customerId) {
