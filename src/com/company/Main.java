@@ -35,7 +35,13 @@ public class Main {
                     "Type " + i + " for customer:" + StaticConstants.CUSTOMER_LIST.get(i).getUserName());
         }
 
-        Customer customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
+        Customer customer = null;
+        try {
+            customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("There is no customer that has this number.Try again please");
+            customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
+        }
 
         Cart cart = new Cart(customer);
 
