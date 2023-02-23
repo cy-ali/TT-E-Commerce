@@ -30,18 +30,15 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Select Customer:");
+        Customer customer = null;
         for (int i = 0; i < StaticConstants.CUSTOMER_LIST.size(); i++) {
             System.out.println(
                     "Type " + i + " for customer:" + StaticConstants.CUSTOMER_LIST.get(i).getUserName());
+
         }
 
-        Customer customer = null;
-        try {
-            customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("There is no customer that has this number.Try again please");
-            customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
-        }
+        customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
+
 
         Cart cart = new Cart(customer);
 
