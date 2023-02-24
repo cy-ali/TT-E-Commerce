@@ -309,9 +309,7 @@ private static void addBalance(Customer customer){
                     .filter(balance-> balance.getCustomerId().equals(customerId))
                     .findFirst()
                     .orElseThrow();
-
         }
-
 
         GiftCardBalance giftCarBalance = new GiftCardBalance(customerId, 0d);
         StaticConstants.GIFT_CARD_BALANCE_LIST.add(giftCarBalance);
