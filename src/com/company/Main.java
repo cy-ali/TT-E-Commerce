@@ -302,16 +302,22 @@ private static void addBalance(Customer customer){
     }
 
     private static GiftCardBalance findGiftCardBalance(UUID customerId) {
-        for (Balance giftCarBalance : StaticConstants.GIFT_CARD_BALANCE_LIST) {
-            if (giftCarBalance.getCustomerId().toString().equals(customerId.toString())) {
-                return (GiftCardBalance) giftCarBalance;
-            }
+        if( StaticConstants.GIFT_CARD_BALANCE_LIST.stream()
+                .anyMatch((balance-> balance.getCustomerId().equals(customerId)))){
+
+            return (GiftCardBalance) StaticConstants.GIFT_CARD_BALANCE_LIST.stream()
+                    .filter(balance-> balance.getCustomerId().equals(customerId))
+                    .findFirst()
+                    .orElseThrow();
         }
 
         GiftCardBalance giftCarBalance = new GiftCardBalance(customerId, 0d);
         StaticConstants.GIFT_CARD_BALANCE_LIST.add(giftCarBalance);
 
         return giftCarBalance;
+
+
+
     }
 
 
