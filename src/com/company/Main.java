@@ -161,9 +161,6 @@ public class Main {
                                         "product name: " + product.getName() + " count: " + cart.getProductMap()
                                                 .get(product));
                             }
-                            break;
-                        } else {
-                            System.out.println("Your cart is empty");
                         }
                     } catch (RuntimeException e) {
                         System.err.println("There is no product added cart yet!");
