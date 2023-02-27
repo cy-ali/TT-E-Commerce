@@ -24,9 +24,11 @@ public class Main {
         DataGenerator.createBalance();
         DataGenerator.createDiscount();
     //to confirm address
-        printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
+      //  printAddressByCustomerId(StaticConstants.CUSTOMER_LIST.get(0));
         //Address{StreetNumber='7925', StreetName='Jones Branch Dr', ZipCode='22102', State='VA'}
         //Address{StreetNumber='825', StreetName='GeorgeTown Pky', ZipCode='22036', State='VA'}
+    //   System.out.println( findCustomerBalance(StaticConstants.CUSTOMER_LIST.get(0).getId()));
+
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Select Customer:");
@@ -168,14 +170,16 @@ public class Main {
                     break;
                 case 6://See cart
                     System.out.println("Your Cart");
-                    if (!cart.getProductMap().keySet().isEmpty()) {
-                        for (Product product : cart.getProductMap().keySet()) {
-                            System.out.println(
-                                    "product name: " + product.getName() + " count: " + cart.getProductMap()
-                                            .get(product));
+                    try {
+                        if (!cart.getProductMap().keySet().isEmpty()) {
+                            for (Product product : cart.getProductMap().keySet()) {
+                                System.out.println(
+                                        "product name: " + product.getName() + " count: " + cart.getProductMap()
+                                                .get(product));
+                            }
                         }
-                    } else {
-                        System.out.println("Your cart is empty");
+                    } catch (RuntimeException e) {
+                        System.err.println("There is no product added cart yet!");
                     }
                     break;
                 case 7://see order details
@@ -229,10 +233,12 @@ private static void addBalance(Customer customer){
     }
 
     private static void updateProductStock(Map<Product, Integer> map) {
-        for (Product product : map.keySet()) {
-            product.setRemainingStock(product.getRemainingStock() - map.get(product));
+                 map.keySet().stream()
+                .forEach(product -> product.setRemainingStock(product.getRemainingStock()-map.get(product)));
+
+
         }
-    }
+
 
     private static void printOrdersByCustomerId(UUID customerId) {
         for (Order order : ORDER_LIST) {
@@ -291,29 +297,40 @@ private static void addBalance(Customer customer){
 
 
     private static CustomerBalance findCustomerBalance(UUID customerId) {
-        for (Balance customerBalance : StaticConstants.CUSTOMER_BALANCE_LIST) {
-            if (customerBalance.getCustomerId().toString().equals(customerId.toString())) {
-                return (CustomerBalance) customerBalance;
-            }
+        if (StaticConstants.CUSTOMER_BALANCE_LIST.stream()
+                .anyMatch(balance -> balance.getCustomerId().toString().equals(customerId.toString()))) {
+            return (CustomerBalance) StaticConstants.CUSTOMER_BALANCE_LIST.stream()
+                   .filter(balance -> balance.getCustomerId().toString().equals(customerId.toString()))
+                    .findFirst()
+                    .orElseThrow();
+        } else {
+            CustomerBalance c = new CustomerBalance(customerId, 0d);
+            StaticConstants.CUSTOMER_BALANCE_LIST.add(c);
+            return c;
         }
 
-        CustomerBalance customerBalance = new CustomerBalance(customerId, 0d);
-        StaticConstants.CUSTOMER_BALANCE_LIST.add(customerBalance);
 
-        return customerBalance;
+
+
     }
 
     private static GiftCardBalance findGiftCardBalance(UUID customerId) {
-        for (Balance giftCarBalance : StaticConstants.GIFT_CARD_BALANCE_LIST) {
-            if (giftCarBalance.getCustomerId().toString().equals(customerId.toString())) {
-                return (GiftCardBalance) giftCarBalance;
-            }
+        if( StaticConstants.GIFT_CARD_BALANCE_LIST.stream()
+                .anyMatch((balance-> balance.getCustomerId().equals(customerId)))){
+
+            return (GiftCardBalance) StaticConstants.GIFT_CARD_BALANCE_LIST.stream()
+                    .filter(balance-> balance.getCustomerId().equals(customerId))
+                    .findFirst()
+                    .orElseThrow();
         }
 
         GiftCardBalance giftCarBalance = new GiftCardBalance(customerId, 0d);
         StaticConstants.GIFT_CARD_BALANCE_LIST.add(giftCarBalance);
 
         return giftCarBalance;
+
+
+
     }
 
 
