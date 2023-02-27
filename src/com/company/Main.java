@@ -37,8 +37,21 @@ public class Main {
 
         }
 
-        customer = StaticConstants.CUSTOMER_LIST.get(scanner.nextInt());
+        int selectedIndex = -1; // Assign to an invalid value
+        do {
+            try {
+                selectedIndex = scanner.nextInt();
+                if (selectedIndex < 0 || selectedIndex >= StaticConstants.CUSTOMER_LIST.size()) {
+                    System.out.println("Invalid input. Please enter a number between 0 and " + (StaticConstants.CUSTOMER_LIST.size() - 1) + ".");
+                    selectedIndex = -1; // Reset again
+                }
+            } catch (RuntimeException e) {
+                System.out.println("Invalid input. Please enter a number.");
+          //      scanner.nextLine(); // Clear the input//scanner memory
+            }
+        } while (selectedIndex == -1);
 
+        customer = StaticConstants.CUSTOMER_LIST.get(selectedIndex);
 
         Cart cart = new Cart(customer);
 
